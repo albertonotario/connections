@@ -29,6 +29,8 @@ function whichOS(){
 }
 
 
+init_time=$(date +%s)
+
 echo 'Maquinas conectadas'
 echo '-------------------'
 
@@ -38,7 +40,10 @@ do
 	machine=$(ping 192.168.1.$i -c1 -W 0.1  | grep "from" | cut -d ' ' -f 4) 
 	if [[ $(whichOS) != 'N/A' ]]
 	then
-		echo $machine'-------->'$(whichOS)
+		fin_time=$(date +%s) 
+		op_time=$((($fin_time-$init_time)))
+		echo  $machine'-------->'$(whichOS)'---->'$op_time' segundos'
 	fi
 done
 
+killall connections.sh
